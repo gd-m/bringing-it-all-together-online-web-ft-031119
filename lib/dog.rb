@@ -47,8 +47,17 @@ class Dog
     dog = self.new(hash_of_attributes)
     dog.save
     dog
+  end
 
+  def self.find_by_id(num)
+    sql = <<-SQL
+    SELECT * FROM dogs
+    WHERE id = ?
+    SQL
 
+    DB[:conn].execute(sql, num).map do |row|
+      self.new_from_db(row)
+    end.first
   end
 
 
