@@ -67,7 +67,15 @@ class Dog
       :breed => row[2]
     }
     self.new(attributes_hash)
+  end
 
+  def update
+    sql = <<-SQL
+    UPDATE dogs SET name =?, breed = ? WHERE id = ?
+    SQL
+
+    DB[:conn].execute(sql, self.name, self.breed, self.id)
+    
   end
 
 
